@@ -14,6 +14,7 @@
 #ifndef ARDUSERVO_H
 #define ARDUSERVO_H
 
+//API Servo handler class
 class ArduSERVO {
 	public:
 	//Constructor. Pass number of SERVO Channels. Limits to 7
@@ -24,18 +25,29 @@ class ArduSERVO {
 	
 	//Poll a channel pin and return high time.
 	
-	
 	private:
 	//Define some variables for the library
 	#define MAX_CHAN 7
 	
 	//Keep track of how many channels are in use
 	uint8_t channelNo;
-	
+
 	//chASM pointer array. Created in constructor.
 	chASM *chanPin[];
 
-
 }; //class ArduSERVO
+
+
+/** Individual Channel Managment **********************************************/
+//Struct handles each channel as a seperate object. Not for user interaction
+struct Channel {
+		//chASM Object for the chASM pin
+		chASM pin;
+		
+		//Min and Max values for the map function. Defaults to analogRead type.
+		int mapMin = 0;
+		int mapMax = 1023;
+	
+	}; //struct Channel
 
 #endif
