@@ -39,15 +39,35 @@ class ArduSERVO {
 
 
 /** Individual Channel Managment **********************************************/
-//Struct handles each channel as a seperate object. Not for user interaction
-struct Channel {
+class Channel {
+		public:
+		//Set this channels pin
+		void setPin(uint8_t pin);
+		
+		//Get the decoded value of the Servo channel. Calls 2 sub-functions.
+		
+		
+		
+		//Get the HIGH pulse time of the servo pin. Returns -1 on failure.
+		int16_t getPulseMicros();
+		
+		
+		
+		
+		//Set the min and max map values
+		void setMapMinMax(int min, int max);
+		
+		private:
 		//chASM Object for the chASM pin
-		chASM pin;
+		chASM *h_pin;
+		
+		//Servo timing variables.
+		#define t_timeout 20000
 		
 		//Min and Max values for the map function. Defaults to analogRead type.
 		int mapMin = 0;
 		int mapMax = 1023;
 	
-	}; //struct Channel
+}; //class Channel
 
 #endif
