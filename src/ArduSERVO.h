@@ -61,8 +61,10 @@ class Channel {
 		//chASM Object for the chASM pin
 		chASM *h_pin;
 		
-		//Servo timing variables.
-		#define t_timeout 20000
+		//Servo timing variables. Change these if you need to.
+		#define t_timeout 20000 //Max micros before a timeout.
+		#define t_maxMicros 2000 //Micros per pulse at max endstop.
+		#define t_minMicros 1000 //Micros per pulse at min endstop.
 		
 		//Min and Max values for the map function. Defaults to analogRead type.
 		int mapMin = 0;

@@ -5,7 +5,7 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 0.2.2
+* Version 0.2.5
 * Last Modified 20 Dec 2022
 * (c) ADBeta
 */
@@ -53,50 +53,52 @@ void Channel::setPin(uint8_t pin) {
 
 
 int16_t Channel::getPulseMicros() {
-	/* Functional description: Keep track of the state of the pin, if the pin 
-	doesn't change state within t_timeout micros, then exit with a failure.
+	/****** Variables and flags setup ******/
+	//Current and last state of the servo pin 
+	bool crntState, lastState;
 	
-	Only trigger a measurment if we have have had at least one cycle of LOW 
-	state. This prevents measuring at some point in the middle of a cycle.
-		
-	If everything is ready, note the rising and falling edge of the pin, 
-	subtract these values to get the length in micros of the servo pulse. */
-	
-	//Current state of the channel pin 
-	bool cState = 0;
-	//TODO
-	//Last state of the channel pin. Set to a known false value to force a check  
-	bool lState = 0xff;
+	//Set last sate to a known wrong value, to force a trigger instantly, this
+	//improves speed as it skips the idle LOW periods before a pulse.  
+	lastState = 0xae;
 	
 	//Flag if a low state has been detected.
 	bool beenLow = false;
 	
 	//Current micros and micros since last activity on the line.
-	uint32_t cMicros, actMicros;
+	//Rising edge and falling edge micros. Used when measuring pulse time.
+	uint32_t crntMicros, actvMicros, riseMicros, fallMicros;
 	
-	//While there is activity on the line
+	/****** Runtime ******/
+	//While the timeout limit is not being exceeded, poll for activity.
 	do {
-		//Keep track of current micros.
-		cMicros = micros();
-	
-		//Get the current state of the pin.
-		cState = h_pin->read();	
+		crntMicros = micros();
+		crntState = h_pin->read();
 		
-		//If the pin state changes, reset the actMicros gap and note the change. 
-		if(cState != lState) {		
-			actMicros = cMicros;
-			lState = cState;
-			
-			//If the pin is LOW, set the beenLow flag.
-			if(cState == LOW) beenLow = true;
+		//If the pin state changes, reset timeout micros, and check if a rising 
+		//or falling edge has taken place. 
+		if(crntState != lastState) {			
+			//If the pin is LOW, set the beenLow flag to detect a rising edge.
+			if(crntState == LOW) beenLow = true;
 			
 			//If the pin is HIGH, AND there has been a low state, trigger a 
-			//measurment.
-			if(cState == HIGH && beenLow == true) {
-				Serial.println("trig");
+			//measurment. This switches to a high speed methodology.
+			if(crntState == HIGH && beenLow == true) {
+				//Get micros of rising edge
+				riseMicros = micros();
+				//Wait until the pin is LOW again.
+				while(h_pin->read() != LOW);
+				//Falling edge micros
+				fallMicros = micros();
+				
+				//Return the difference between rising and falling edge
+				return fallMicros - riseMicros;
 			}
+			
+			//Reset states for the next loop.
+			actvMicros = crntMicros;
+			lastState = crntState;
 		}
-	} while(cMicros - actMicros < t_timeout);
+	} while(crntMicros - actvMicros < t_timeout);
 	
 	//If while loop exits, timeout has happened
 	return -1;
