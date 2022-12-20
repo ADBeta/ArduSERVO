@@ -8,21 +8,30 @@
 * (c) ADBeta
 */
 
+#include <Arduino.h>
+#include "./chASM.h"
+
 #ifndef ARDUSERVO_H
 #define ARDUSERVO_H
-
-#include <Arduino.h>
 
 class ArduSERVO {
 	public:
 	//Constructor. Pass number of SERVO Channels.
 	ArduSERVO(uint8_t chan);
 	
+	//Set the pin of a certain channel
+	void setPin(uint8_t chan, uint8_t pin);
+	
 	
 	private:
+	//Define some variables for the library
+	#define MAX_CHAN 7
+	
 	//Keep track of how many channels are in use
 	uint8_t channelNo;
 	
+	//chASM pointer array. Created in constructor.
+	chASM *chanPin[];
 
 
 }; //class ArduSERVO

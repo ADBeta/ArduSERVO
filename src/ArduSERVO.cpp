@@ -11,11 +11,32 @@
 */
 
 #include "ArduSERVO.h"
+#include "./chASM.h"
 
 ArduSERVO::ArduSERVO(uint8_t chan) {
+	//TODO Max limit
+
 	//Set the number of channels
 	this->channelNo = chan;
 	
 	//Set the number of chASM objects
+	chASM *chanPin[chan];
+}
+
+void ArduSERVO::setPin(uint8_t chan, uint8_t pin) {
+	//If the pin passed is higher than we have selected or MAX, then exit.
+	if(chan > MAX_CHAN || chan > channelNo) return;	
+	
+	//Create a new chASM object with the pin that was passed.
+	chASM *nPin = new chASM(pin);
+	
+	//Set the pointer at array index [chan].
+	chanPin[chan] = nPin;
+	
+	//Set the pin variables.
+	chanPin[chan]->setMode(OUTPUT);
+	
+	
+	
 
 }
