@@ -17,7 +17,8 @@ It also uses chASM, an assembly hardware handler. You may find it useful: [chASM
 ## Usage
 
 ## Changelog
-* 0.0.1 - Getting basic functionality.
+* 0.0.1 - Getting basic functionality.  
+* 0.1.1 - Added some core features with pre-optimization.  
 
 --------------------------------------------------------------------------------
 This software is under the GPL v3 licence by ADBeta 2022 - 2023. please read the  

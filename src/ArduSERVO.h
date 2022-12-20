@@ -16,11 +16,13 @@
 
 class ArduSERVO {
 	public:
-	//Constructor. Pass number of SERVO Channels.
+	//Constructor. Pass number of SERVO Channels. Limits to 7
 	ArduSERVO(uint8_t chan);
 	
 	//Set the pin of a certain channel
-	void setPin(uint8_t chan, uint8_t pin);
+	void setChannelPin(uint8_t chan, uint8_t pin);
+	
+	//Poll a channel pin and return high time.
 	
 	
 	private:

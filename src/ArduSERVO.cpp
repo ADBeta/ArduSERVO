@@ -5,7 +5,7 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 0.0.1
+* Version 0.1.1
 * Last Modified 20 Dec 2022
 * (c) ADBeta
 */
@@ -16,14 +16,14 @@
 ArduSERVO::ArduSERVO(uint8_t chan) {
 	//TODO Max limit
 
-	//Set the number of channels
+	//Set channel variables
 	this->channelNo = chan;
 	
 	//Set the number of chASM objects
 	chASM *chanPin[chan];
 }
 
-void ArduSERVO::setPin(uint8_t chan, uint8_t pin) {
+void ArduSERVO::setChannelPin(uint8_t chan, uint8_t pin) {
 	//If the pin passed is higher than we have selected or MAX, then exit.
 	if(chan > MAX_CHAN || chan > channelNo) return;	
 	
@@ -34,9 +34,5 @@ void ArduSERVO::setPin(uint8_t chan, uint8_t pin) {
 	chanPin[chan] = nPin;
 	
 	//Set the pin variables.
-	chanPin[chan]->setMode(OUTPUT);
-	
-	
-	
-
+	chanPin[chan]->setMode(INPUT);
 }
