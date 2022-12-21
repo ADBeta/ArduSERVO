@@ -17,5 +17,5 @@ void setup() {
 }
 
 void loop() {
-	Serial.println(chan.getPulseMicros());
+	Serial.println(chan.pulseDeadzone(chan.getPulseMicros()));
 }

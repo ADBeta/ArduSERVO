@@ -51,6 +51,9 @@ class Channel {
 		//Get the HIGH pulse time of the servo pin. Returns -1 on failure.
 		int16_t getPulseMicros();
 		
+		//TODO Add a enable/disable variable to this
+		//Snap input values to a desired value, hystDelta controls the amount.
+		int16_t pulseDeadzone(int16_t pulseMicros);
 		
 		
 		
@@ -61,15 +64,23 @@ class Channel {
 		//chASM Object for the chASM pin
 		chASM *h_pin;
 		
-		//Servo timing variables. Change these if you need to.
-		#define t_timeout 20000 //Max micros before a timeout.
-		#define t_maxMicros 2000 //Micros per pulse at max endstop.
-		#define t_minMicros 1000 //Micros per pulse at min endstop.
-		
 		//Min and Max values for the map function. Defaults to analogRead type.
 		int mapMin = 0;
 		int mapMax = 1023;
-	
+		
+		//Servo timing variables. Change these if you need to.
+		#define t_timeout 20000 //Max micros before a timeout.
+		
+		//Deadzone values pre-defined to increase speed. These can be changed.
+		#define dz_maxSnap 2000 //Values to snap to when deadzone triggers
+		#define dz_midSnap 1500
+		#define dz_minSnap 1000
+		
+		#define dz_maxHyst 1980 //Values that will trigger a snap to deadzones
+		#define dz_minHyst 1020
+		//
+		#define dz_midHystHi 1520
+		#define dz_midHystLo 1480
 }; //class Channel
 
 #endif

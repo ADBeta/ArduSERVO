@@ -5,7 +5,7 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 0.2.5
+* Version 0.2.6
 * Last Modified 20 Dec 2022
 * (c) ADBeta
 */
@@ -104,4 +104,30 @@ int16_t Channel::getPulseMicros() {
 	return -1;
 }
 
-
+int16_t Channel::pulseDeadzone(int16_t pulseMicros) {
+	//Exit if the pulse from receiver is a failstate.
+	if(pulseMicros == -1) return -1;
+	
+	int16_t deadzonedMicros;
+	
+	//Check if the input value is within a range to the desired value.
+	//Mid snap needs to be in a range
+	if(pulseMicros < dz_midHystHi && pulseMicros > dz_midHystLo) {
+		deadzonedMicros = dz_midSnap;
+	} else 
+	
+	//Max snap at upper bound
+	if(pulseMicros > dz_maxHyst) {
+		deadzonedMicros = dz_maxSnap;
+	} else 
+	
+	//Min snap at lower bound
+	if(pulseMicros < dz_minHyst) {
+		deadzonedMicros = dz_minSnap;
+	} else 
+	
+	//If the input isn't within a deadzone, pass the input through.
+	{ deadzonedMicros = pulseMicros; }
+	
+	return deadzonedMicros;
+}
