@@ -20,12 +20,11 @@ It also uses chASM, an assembly hardware handler. You may find it useful: [chASM
 ## Usage
 
 ## TODO
-* Add a deadzone enable/disable control
 * create a function to map the microsecond servo values to a configurable value  
 range.  
 * Make a general user class that allows for a simple array of channels to be  
 used and configured.  
-* optimise the functions for speed.
+* optimise the functions for speed!!
 
 ## Changelog
 * 0.0.1 - Getting basic functionality.  
@@ -33,6 +32,7 @@ used and configured.
 * 0.2.2 - Removed the 8 channel limit. Working on better API  
 * 0.2.5 - Fixed an inverted value bug. Finished the pulse detection function.
 * 0.2.6 - Added a deadzone function.
+* 0.2.8 - Rolled deadzone into getPulse, and made it selectable.
 
 --------------------------------------------------------------------------------
 This software is under the GPL v3 licence by ADBeta 2022 - 2023. please read the  
