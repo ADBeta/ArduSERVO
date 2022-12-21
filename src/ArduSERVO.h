@@ -41,8 +41,11 @@ class ArduSERVO {
 /** Individual Channel Managment **********************************************/
 class Channel {
 		public:
-		//Set this channels pin
+		//Set this channels pin, uses Arduino pin numbering
 		void setPin(uint8_t pin);
+		
+		//Enable or disable deadzones for position value. Default enabled
+		void setDeadzone(bool en);
 		
 		//Get the decoded value of the Servo channel. Calls 2 sub-functions.
 		
@@ -52,8 +55,7 @@ class Channel {
 		int16_t getPulseMicros();
 		
 		//TODO Add a enable/disable variable to this
-		//Snap input values to a desired value, hystDelta controls the amount.
-		int16_t pulseDeadzone(int16_t pulseMicros);
+		
 		
 		
 		
@@ -63,6 +65,9 @@ class Channel {
 		private:
 		//chASM Object for the chASM pin
 		chASM *h_pin;
+		
+		/** Flags and vars **/
+		bool enDeadzone = true; //Enable deadzone snapping. Deafult yes.
 		
 		//Min and Max values for the map function. Defaults to analogRead type.
 		int mapMin = 0;
@@ -81,6 +86,12 @@ class Channel {
 		//
 		#define dz_midHystHi 1520
 		#define dz_midHystLo 1480
+		
+		/** Functions **/
+		//Snap input values to a desired value, hystDelta controls the amount.
+		int16_t pulseDeadzone(int16_t pulseMicros);
+		
+		
 }; //class Channel
 
 #endif

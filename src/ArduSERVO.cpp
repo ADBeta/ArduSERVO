@@ -5,8 +5,8 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 0.2.6
-* Last Modified 20 Dec 2022
+* Version 0.2.8
+* Last Modified 21 Dec 2022
 * (c) ADBeta
 */
 
@@ -51,6 +51,9 @@ void Channel::setPin(uint8_t pin) {
 	h_pin->setMode(INPUT);
 }
 
+void Channel::setDeadzone(bool en) {
+	this->enDeadzone = en;
+}
 
 int16_t Channel::getPulseMicros() {
 	/****** Variables and flags setup ******/
@@ -68,6 +71,9 @@ int16_t Channel::getPulseMicros() {
 	//Rising edge and falling edge micros. Used when measuring pulse time.
 	uint32_t crntMicros, actvMicros, riseMicros, fallMicros;
 	
+	//Output value. Default to -1 to catch error states
+	int16_t pulseMicros = -1;
+		
 	/****** Runtime ******/
 	//While the timeout limit is not being exceeded, poll for activity.
 	do {
@@ -90,8 +96,9 @@ int16_t Channel::getPulseMicros() {
 				//Falling edge micros
 				fallMicros = micros();
 				
-				//Return the difference between rising and falling edge
-				return fallMicros - riseMicros;
+				//Set output to the difference between rising and falling edge
+				pulseMicros = fallMicros - riseMicros;
+				break;
 			}
 			
 			//Reset states for the next loop.
@@ -100,8 +107,13 @@ int16_t Channel::getPulseMicros() {
 		}
 	} while(crntMicros - actvMicros < t_timeout);
 	
-	//If while loop exits, timeout has happened
-	return -1;
+	//If deadzones are enabled, pass the value to the function and return it.
+	if(enDeadzone) {
+		return pulseDeadzone(pulseMicros);
+	} else {
+		//If deadzones disabled, just pass the value straight out.
+		return pulseMicros;
+	}	
 }
 
 int16_t Channel::pulseDeadzone(int16_t pulseMicros) {
