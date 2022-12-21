@@ -1,5 +1,5 @@
 # ArduSERVO
-<b> (c) ADBeta 2022 </b>
+<b> (c) ADBeta 2022 - 2023 </b>
 
 ArduSERVO is an arduino library that allows RC Servo PWM signals to be  
 received and decoded into raw values.  
@@ -18,6 +18,14 @@ This library is a hobby project. I am open to suggestions for upgrades or fixes.
 It also uses chASM, an assembly hardware handler. You may find it useful: [chASM](https://github.com/ADBeta/chASM)
 
 ## Usage
+
+## TODO
+* Add a deadzone feature, with enable/disable control
+* create a function to map the microsecond servo values to a configurable value  
+range.  
+* Make a general user class that allows for a simple array of channels to be  
+used and configured.  
+* optimise the functions for speed.
 
 ## Changelog
 * 0.0.1 - Getting basic functionality.  
