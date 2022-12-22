@@ -20,6 +20,7 @@ It also uses chASM, an assembly hardware handler. You may find it useful: [chASM
 ## Usage
 
 ## TODO
+* Investiate why every call to getPulseMicros is exactly the same exec time.  
 * create a function to map the microsecond servo values to a configurable value  
 range.  
 * Make a general user class that allows for a simple array of channels to be  
