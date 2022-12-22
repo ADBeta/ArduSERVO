@@ -59,6 +59,9 @@ class Channel {
 		int16_t getPulseMicros();
 		
 		
+		//Map the pulseMicros to a defined range and return it.
+		//This uses floating point arithmetic, so can slow down execution.
+		int16_t mapMicrosToRange(int16_t pulseMicros);
 		
 		private:
 		//chASM Object for the chASM pin
@@ -69,8 +72,11 @@ class Channel {
 		bool midDeadzone = true; //Enable deadzone centre snapping. Deafult yes.
 		
 		//Min and Max values for the map function. Defaults to analogRead type.
-		int mapMin = 0;
-		int mapMax = 1023;
+		int16_t mapMin = 0;
+		int16_t mapMax = 1023;
+		//Slope used to map the input range to the output range.
+		//Precalculated for 0-1023, recalculates whenever setMapMinMax is called
+		float mapSlope = 1.023;
 		
 		//Servo timing variables. Change these if you need to.
 		#define t_timeout 22000 //Max micros before a timeout.

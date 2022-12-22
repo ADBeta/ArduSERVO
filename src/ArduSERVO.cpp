@@ -151,3 +151,7 @@ int16_t Channel::pulseDeadzone(int16_t pulseMicros) {
 	//If the deadzoning isn't enabled, the value should not have been modified.
 	return pulseMicros;
 }
+
+int16_t Channel::mapMicrosToRange(int16_t pulseMicros) {
+	return int(mapMin + mapSlope * (pulseMicros - dz_minSnap));
+}

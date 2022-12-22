@@ -36,5 +36,5 @@ void loop() {
 	Serial.println(delta);
 	*/
 	delay(100);
-	Serial.println(chan.getPulseMicros());
+	Serial.println(chan.mapMicrosToRange(chan.getPulseMicros()));
 }
