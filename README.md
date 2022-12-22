@@ -21,10 +21,9 @@ It also uses chASM, an assembly hardware handler. You may find it useful: [chASM
 
 ## TODO
 * Investiate why every call to getPulseMicros is exactly the same exec time.  
-* create a function to map the microsecond servo values to a configurable value  
-range.  
 * Make a general user class that allows for a simple array of channels to be  
 used and configured.  
+* Make the map function not use float artihmetic.  
 * optimise the functions for speed!!  
 
 ## Changelog
@@ -35,7 +34,8 @@ used and configured.
 * 0.2.6 - Added a deadzone function.  
 * 0.2.8 - Rolled deadzone into getPulse, and made it selectable.  
 * 0.2.10 - Split deadzones, so endstop and middle deadzones can be independantly  
-selected.
+selected.  
+* 0.3.10 - Added a function to map the pulseMicros to a defined range.  
 
 --------------------------------------------------------------------------------
 This software is under the GPL v3 licence by ADBeta 2022 - 2023. please read the  
