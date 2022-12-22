@@ -15,7 +15,7 @@ values mimic the arduino analogRead() functons - 0 to 1023.
 See Usage for more information.  
 
 This library is a hobby project. I am open to suggestions for upgrades or fixes.  
-It also uses chASM, an assembly hardware handler. You may find it useful: [chASM](https://github.com/ADBeta/chASM)
+It also uses chASM, an assembly hardware handler. You may find it useful: [chASM](https://github.com/ADBeta/chASM)  
 
 ## Usage
 
@@ -24,15 +24,17 @@ It also uses chASM, an assembly hardware handler. You may find it useful: [chASM
 range.  
 * Make a general user class that allows for a simple array of channels to be  
 used and configured.  
-* optimise the functions for speed!!
+* optimise the functions for speed!!  
 
 ## Changelog
 * 0.0.1 - Getting basic functionality.  
 * 0.1.1 - Added some core features with pre-optimization.  
 * 0.2.2 - Removed the 8 channel limit. Working on better API  
-* 0.2.5 - Fixed an inverted value bug. Finished the pulse detection function.
-* 0.2.6 - Added a deadzone function.
-* 0.2.8 - Rolled deadzone into getPulse, and made it selectable.
+* 0.2.5 - Fixed an inverted value bug. Finished the pulse detection function.  
+* 0.2.6 - Added a deadzone function.  
+* 0.2.8 - Rolled deadzone into getPulse, and made it selectable.  
+* 0.2.10 - Split deadzones, so endstop and middle deadzones can be independantly  
+selected.
 
 --------------------------------------------------------------------------------
 This software is under the GPL v3 licence by ADBeta 2022 - 2023. please read the  
