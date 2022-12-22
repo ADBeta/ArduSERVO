@@ -41,40 +41,39 @@ class ArduSERVO {
 /** Individual Channel Managment **********************************************/
 class Channel {
 		public:
+		/** Setters & Getters *************************************************/
 		//Set this channels pin, uses Arduino pin numbering
 		void setPin(uint8_t pin);
 		
-		//Enable or disable deadzones for position value. Default enabled
-		void setDeadzone(bool en);
+		//Set the min and max map values
+		void setMapMinMax(int min, int max);
+		
+		//Enable/disable deadzones for ends and centre.
+		void setDeadzones(bool ends, bool centre);
 		
 		//Get the decoded value of the Servo channel. Calls 2 sub-functions.
 		
 		
-		
+		/** *********************************/
 		//Get the HIGH pulse time of the servo pin. Returns -1 on failure.
 		int16_t getPulseMicros();
 		
-		//TODO Add a enable/disable variable to this
 		
-		
-		
-		
-		//Set the min and max map values
-		void setMapMinMax(int min, int max);
 		
 		private:
 		//chASM Object for the chASM pin
 		chASM *h_pin;
 		
-		/** Flags and vars **/
-		bool enDeadzone = true; //Enable deadzone snapping. Deafult yes.
+		/** Flags and vars ****************************************************/
+		bool endDeadzone = true; //Enable deadzone end snapping. Deafult yes.
+		bool midDeadzone = true; //Enable deadzone centre snapping. Deafult yes.
 		
 		//Min and Max values for the map function. Defaults to analogRead type.
 		int mapMin = 0;
 		int mapMax = 1023;
 		
 		//Servo timing variables. Change these if you need to.
-		#define t_timeout 20000 //Max micros before a timeout.
+		#define t_timeout 22000 //Max micros before a timeout.
 		
 		//Deadzone values pre-defined to increase speed. These can be changed.
 		#define dz_maxSnap 2000 //Values to snap to when deadzone triggers
@@ -87,7 +86,7 @@ class Channel {
 		#define dz_midHystHi 1520
 		#define dz_midHystLo 1480
 		
-		/** Functions **/
+		/** Functions *********************************************************/
 		//Snap input values to a desired value, hystDelta controls the amount.
 		int16_t pulseDeadzone(int16_t pulseMicros);
 		

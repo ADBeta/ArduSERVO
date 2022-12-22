@@ -13,7 +13,7 @@ void setup() {
 	
 	
 	//srv.setChannelPin(0, 8);
-	//chan.setDeadzone(false);
+	//chan.setDeadzones(false, true);
 
 }
 
@@ -24,16 +24,17 @@ void loop() {
 	// fail - deadzone:		20,020 (20mic added)
 	
 	//sense with flat return: 
-	
 	/*
-	static uint32_t sMicros, eMicros;
+	static uint32_t sMicros, eMicros, delta;
+	static uint32_t minD = 999999;
 	
 	sMicros = micros();
 	chan.getPulseMicros();
 	eMicros = micros();
 	
-	Serial.println(eMicros - sMicros);
+	delta = eMicros - sMicros;
+	Serial.println(delta);
 	*/
-	
+	delay(100);
 	Serial.println(chan.getPulseMicros());
 }
