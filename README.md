@@ -62,6 +62,8 @@ used and configured.
 selected.  
 * 0.3.10 - Added a function to map the pulseMicros to a defined range.  
 * 1.3.10 - More or less fully functioning initial release.  
+* 1.4.10 - chASM pin definition used the same RAM for every channel. Fixed by  
+asigning pins via new and heap. Forces unique RAM asign.  
 
 --------------------------------------------------------------------------------
 This software is under the GPL v3 licence by ADBeta 2022 - 2023. please read the  

@@ -5,7 +5,7 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 1.3.10
+* Version 1.4.10
 * Last Modified 23 Dec 2022
 * (c) ADBeta
 */
@@ -17,8 +17,7 @@
 /** Setters and Getters *******************************************************/
 void ArduSERVO::setPin(uint8_t pin) {
 	//Create a new chASM object with pin, and set h_pin to reference it
-	static chASM pinPtr(pin);
-	h_pin = &pinPtr;
+	h_pin = new chASM(pin);
 	
 	//Set some pin variables.
 	h_pin->setMode(INPUT);
