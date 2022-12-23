@@ -1,7 +1,5 @@
 #include <ArduSERVO.h>
 
-#include "ArduSERVO.h"
-
 ArduSERVO chan1;
 ArduSERVO chan2;
 
