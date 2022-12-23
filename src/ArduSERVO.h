@@ -9,7 +9,7 @@
 */
 
 #include <Arduino.h>
-#include "./chASM.h"
+#include "chASM.h"
 
 #ifndef ARDUSERVO_H
 #define ARDUSERVO_H
@@ -18,7 +18,7 @@
 class ArduSERVO {
 	public:
 	//Constructor. Pass number of SERVO Channels. Limits to 7
-	ArduSERVO(uint8_t chan);
+	ArduSERVO(uint8_t channels);
 	
 	//Set the pin of a certain channel
 	void setChannelPin(uint8_t chan, uint8_t pin);
@@ -26,14 +26,10 @@ class ArduSERVO {
 	//Poll a channel pin and return high time.
 	
 	private:
-	//Define some variables for the library
-	#define MAX_CHAN 7
 	
 	//Keep track of how many channels are in use
 	uint8_t channelNo;
 
-	//chASM pointer array. Created in constructor.
-	chASM *chanPin[];
 
 }; //class ArduSERVO
 
@@ -51,18 +47,16 @@ class Channel {
 		//Enable/disable deadzones for ends and centre.
 		void setDeadzones(bool ends, bool centre);
 		
-		//Get the decoded value of the Servo channel. Calls 2 sub-functions.
-		
-		
-		/** *********************************/
+		/** API Functions *****************************************************/
 		//Get the HIGH pulse time of the servo pin. Returns -1 on failure.
 		int16_t getPulseMicros();
 		
-		
 		//Map the pulseMicros to a defined range and return it.
 		//This uses floating point arithmetic, so can slow down execution.
+		//TODO investigate non float options or measure speed
 		int16_t mapMicrosToRange(int16_t pulseMicros);
 		
+		////////////////////////////////////////////////////////////////////////
 		private:
 		//chASM Object for the chASM pin
 		chASM *h_pin;
@@ -76,6 +70,7 @@ class Channel {
 		int16_t mapMax = 1023;
 		//Slope used to map the input range to the output range.
 		//Precalculated for 0-1023, recalculates whenever setMapMinMax is called
+		//TODO
 		float mapSlope = 1.023;
 		
 		//Servo timing variables. Change these if you need to.
@@ -85,18 +80,14 @@ class Channel {
 		#define dz_maxSnap 2000 //Values to snap to when deadzone triggers
 		#define dz_midSnap 1500
 		#define dz_minSnap 1000
-		
 		#define dz_maxHyst 1980 //Values that will trigger a snap to deadzones
 		#define dz_minHyst 1020
-		//
 		#define dz_midHystHi 1520
 		#define dz_midHystLo 1480
 		
 		/** Functions *********************************************************/
 		//Snap input values to a desired value, hystDelta controls the amount.
 		int16_t pulseDeadzone(int16_t pulseMicros);
-		
-		
 }; //class Channel
 
 #endif

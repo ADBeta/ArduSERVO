@@ -1,6 +1,8 @@
 # ArduSERVO
 <b> (c) ADBeta 2022 - 2023 </b>
 
+This library depends on chASM. please find and install it here: [chASM](https://github.com/ADBeta/chASM)  
+
 ArduSERVO is an arduino library that allows RC Servo PWM signals to be  
 received and decoded into raw values.  
 This is useful when using RC Receivers that only support PWM/Servo outputs,  
@@ -15,7 +17,6 @@ values mimic the arduino analogRead() functons - 0 to 1023.
 See Usage for more information.  
 
 This library is a hobby project. I am open to suggestions for upgrades or fixes.  
-It also uses chASM, an assembly hardware handler. You may find it useful: [chASM](https://github.com/ADBeta/chASM)  
 
 ## Usage
 

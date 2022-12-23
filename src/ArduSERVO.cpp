@@ -11,7 +11,7 @@
 */
 
 #include "ArduSERVO.h"
-#include "./chASM.h"
+#include "chASM.h"
 
 /*
 ArduSERVO::ArduSERVO(uint8_t chan) {
@@ -49,7 +49,6 @@ void Channel::setPin(uint8_t pin) {
 	h_pin = &pinPtr;
 	
 	//Set some pin variables.
-	h_pin->write(LOW); //TODO not needed?
 	h_pin->setMode(INPUT);
 }
 
