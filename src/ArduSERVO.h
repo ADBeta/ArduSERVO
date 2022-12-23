@@ -14,28 +14,8 @@
 #ifndef ARDUSERVO_H
 #define ARDUSERVO_H
 
-//API Servo handler class
-class ArduSERVO {
-	public:
-	//Constructor. Pass number of SERVO Channels. Limits to 7
-	ArduSERVO(uint8_t channels);
-	
-	//Set the pin of a certain channel
-	void setChannelPin(uint8_t chan, uint8_t pin);
-	
-	//Poll a channel pin and return high time.
-	
-	private:
-	
-	//Keep track of how many channels are in use
-	uint8_t channelNo;
-
-
-}; //class ArduSERVO
-
-
 /** Individual Channel Managment **********************************************/
-class Channel {
+class ArduSERVO {
 		public:
 		/** Setters & Getters *************************************************/
 		//Set this channels pin, uses Arduino pin numbering

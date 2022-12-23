@@ -5,45 +5,17 @@
 * If this library is in use within another project, please see the original 
 * github page: https://github.com/ADBeta/ArduSERVO
 * 
-* Version 0.2.10
-* Last Modified 22 Dec 2022
+* Version 1.3.10
+* Last Modified 23 Dec 2022
 * (c) ADBeta
 */
 
 #include "ArduSERVO.h"
 #include "chASM.h"
 
-/*
-ArduSERVO::ArduSERVO(uint8_t chan) {
-	//TODO Max limit
-
-	//Set channel variables
-	this->channelNo = chan;
-	
-	//Set the number of chASM objects
-	chASM *chanPin[chan];
-}
-
-
-void ArduSERVO::setChannelPin(uint8_t chan, uint8_t pin) {
-	//If the pin passed is higher than we have selected or MAX, then exit.
-	if(chan > MAX_CHAN || chan > channelNo) return;	
-	
-	//Create a new chASM object with the pin that was passed.
-	chASM *nPin = new chASM(pin);
-	
-	//Set the pointer at array index [chan].
-	chanPin[chan] = nPin;
-	
-	//Set the pin variables.
-	chanPin[chan]->setMode(INPUT);
-}
-
-*/
-
 /** Individual Channel Class **************************************************/
 /** Setters and Getters *******************************************************/
-void Channel::setPin(uint8_t pin) {
+void ArduSERVO::setPin(uint8_t pin) {
 	//Create a new chASM object with pin, and set h_pin to reference it
 	static chASM pinPtr(pin);
 	h_pin = &pinPtr;
@@ -52,18 +24,20 @@ void Channel::setPin(uint8_t pin) {
 	h_pin->setMode(INPUT);
 }
 
-void Channel::setDeadzones(bool ends, bool centre) {
+void ArduSERVO::setDeadzones(bool ends, bool centre) {
 	this->endDeadzone = ends;
 	this->midDeadzone = centre;
 }
 
-void Channel::setMapMinMax(int min, int max) {
+void ArduSERVO::setMapMinMax(int min, int max) {
 	mapMin = min;
 	mapMax = max;
+	
+	mapSlope = (max - min) / (dz_maxSnap - dz_minSnap);
 }
 
 /** API Function **************************************************************/
-int16_t Channel::getPulseMicros() {
+int16_t ArduSERVO::getPulseMicros() {
 	/****** Variables and flags setup ******/
 	//Current and last state of the servo pin 
 	uint8_t crntState, lastState;
@@ -120,7 +94,7 @@ int16_t Channel::getPulseMicros() {
 	return -1;
 }
 
-int16_t Channel::pulseDeadzone(int16_t pulseMicros) {
+int16_t ArduSERVO::pulseDeadzone(int16_t pulseMicros) {
 	//Exit if the pulse from receiver is a failstate.
 	if(pulseMicros == -1) return -1;
 	
@@ -151,6 +125,6 @@ int16_t Channel::pulseDeadzone(int16_t pulseMicros) {
 	return pulseMicros;
 }
 
-int16_t Channel::mapMicrosToRange(int16_t pulseMicros) {
+int16_t ArduSERVO::mapMicrosToRange(int16_t pulseMicros) {
 	return int(mapMin + mapSlope * (pulseMicros - dz_minSnap));
 }
